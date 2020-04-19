@@ -7,7 +7,98 @@ output: html_notebook
 
 ## 1. Write a script to import and tidy the Johnson Elementary Project Data.
 
+```{r}
+
+# Load packages
+library(tidyverse)
+library(here)
+
+# Read in data
+data <-read_csv(here("Data", "Johnson Elementary ELA Project.csv"),
+                skip = 4,
+                col_names = c("Room", 
+                              "ID", 
+                              "Tardies/Absences", 
+                              "Q1", 
+                              "Q2", 
+                              "Q3", 
+                              "Q4"),
+                col_types = cols(Room = col_factor()))
+
+# Fill missing room labels and separate Tardies,Absences into 2 columns using pipe
+
+data <- data %>%
+  fill(Room) %>%
+  separate('Tardies/Absences', into = c("Tardies", "Absences"), sep =";")
+
+data$Tardies <- parse_double(data$Tardies)
+
+data$Absences <- parse_double(data$Absences)
+typeof(data$Tardies)
+typeof(data$Absences)
+
+```
+
+
 ## 2. Write a script to provide summary statistics for the number of tardies and absences for each room.
+
+
+```{r}
+
+summarystatistics <- data %>%
+  group_by(Room) %>%
+  summarize(Tardies_mean = mean(Tardies),
+            Tardies_SD = sd(Tardies),
+            Absences_mean = mean(Absences),
+            Absences_sd = sd(Absences))
+                              
+summarystatistics
+
+```
+
 ## 3. Write a script to show the frequency of missing data points for each quarter by room.
+
+```{r}
+
+missingdata <- data%>%
+  group_by(Room) %>%
+  count(sum(is.na(Q1:Q4)))
+
+```
+
+
 ## 4. Construct a graph that illustrates the median rating trends across the four quarters for the fifth-grade classes.
+
+```{r}
+
+```
+
 ## 5. Use the NYC flights data to construct a graph that compares carriers in terms of the proportion of 2013 flights that arrived on time when traveling from NYC to ATL. Your graph should include a title and easy-to-read labels, including the names of airlines rather than airline codes.
+
+```{r}
+# Load the data
+flights <-read_csv(here("Data", "NYC Flights 2013.csv"))
+
+# Graph carriers in terms of proportion of 2013 flights on time from NYC to ATL
+
+nyflights <- flights %>%
+  filter(origin %in% c("JFK", "LGA"), dest == "ATL") 
+
+# sum = 256
+
+otflights <- flights %>%
+  filter(arr_delay == 0, origin %in% c("JFK", "LGA"), dest == "ATL") 
+
+# arr_delay == 0 sum = 256
+
+nyflights$prop <- sum(nyflights$arr_delay)
+nyflights$prop
+
+  ggplot(aes(nyflights, x = carrier, y = arr_delay)) +
+  geom_point() +
+  labs(title = "On Time Arrivals from NYC to ATL",
+       x = "Carrier",
+       y = "Proportion of 2013 On Time Arrivals")
+
+```
+

@@ -1754,22 +1754,72 @@ summary {
 <!-- rnb-text-begin -->
 <div id="write-a-script-to-import-and-tidy-the-johnson-elementary-project-data." class="section level2">
 <h2>1. Write a script to import and tidy the Johnson Elementary Project Data.</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudHlwZW9mKGRhdGEkQWJzZW5jZXMpXG5cbmBgYCJ9 -->
+<pre class="r"><code>typeof(data$Absences)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiZG91YmxlXCJcbiJ9 -->
+<pre><code>[1] &quot;double&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="write-a-script-to-provide-summary-statistics-for-the-number-of-tardies-and-absences-for-each-room." class="section level2">
 <h2>2. Write a script to provide summary statistics for the number of tardies and absences for each room.</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6NSwibnJvdyI6MTB9LCJyZGYiOiJINHNJQUFBQUFBQUFBKzFUelU3Q1FCQWUrZ2RVSVJwZndCZWdvYUFCanliRUIwQk11Sm1sWGJTeDdKSzJxRGQ5Rmg3U2VLTE9kbmN4dTJlUEhxWXozN2Z6dTl1Wno1YmpjQmtDZ0F0dTRJRHJvd24rdytKdU1BWHdIQVF0OEtBcjlEczZYWWhUMUQzVVlYTUk0RFRSNkMzUElFQnBvM1JRdXRMUFNCVGs5SlhtSlZwbnphbGtPM1BPTjVmeDhOckU4Y1RDVXhPUHhoYTI0a2MzSmg2UExHemx2eHBhZUdKMTd5YzVLWFh6eDVIV0pLbDRnZFlCcFMvRyt2Z1dOOW5lLzVYK3o2dnptcy9CeUlicTUvQVY2WW0zVS9icGdoUnBSc3ZIRFNWTWNhSG03bWVLNmQydVNzb1MwKzNrU0phcFZiWmI4TGRJbHhiTDRIemlwNjdyTCtubzF0WWZFcWFrSXRHNndCRDVseGpwMm54YlpaeGhNa2R0bUJIY0tpemlmTWRFOFhTUVBPL1l5eUNPaC9DN2o2QmFhaWxPMjc0czZ1blc5RzBGbEQxbGpPb0x6Y21LNWdyMGNjeG15bWhiWkt6U3N5QmJSaFd2aVBZTEU1NXJSdTdBNFFkS3JSVnpXZ1FBQUE9PSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Room"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["Tardies_mean"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Tardies_SD"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Absences_mean"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Absences_sd"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Room 105","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 117","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 118","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 123","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 125","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 129","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 132","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 137","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 140","2":"NA","3":"NA","4":"NA","5":"NA"},{"1":"Room 147","2":"NA","3":"NA","4":"NA","5":"NA"}],"options":{"columns":{"min":{},"max":[10],"total":[5]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="write-a-script-to-show-the-frequency-of-missing-data-points-for-each-quarter-by-room." class="section level2">
 <h2>3. Write a script to show the frequency of missing data points for each quarter by room.</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5taXNzaW5nZGF0YSA8LSBkYXRhJT4lXG4gIGdyb3VwX2J5KFJvb20pICU+JVxuICBjb3VudChzdW0oaXMubmEoUTE6UTQpKSlcbmBgYCJ9 -->
+<pre class="r"><code>
+missingdata &lt;- data%&gt;%
+  group_by(Room) %&gt;%
+  count(sum(is.na(Q1:Q4)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibnVtZXJpY2FsIGV4cHJlc3Npb24gaGFzIDIxIGVsZW1lbnRzOiBvbmx5IHRoZSBmaXJzdCB1c2VkbnVtZXJpY2FsIGV4cHJlc3Npb24gaGFzIDIxIGVsZW1lbnRzOiBvbmx5IHRoZSBmaXJzdCB1c2VkRXJyb3IgaW4gUTE6UTQgOiBOQS9OYU4gYXJndW1lbnRcbiJ9 -->
+<pre><code>numerical expression has 21 elements: only the first usednumerical expression has 21 elements: only the first usedError in Q1:Q4 : NA/NaN argument</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="construct-a-graph-that-illustrates-the-median-rating-trends-across-the-four-quarters-for-the-fifth-grade-classes." class="section level2">
 <h2>4. Construct a graph that illustrates the median rating trends across the four quarters for the fifth-grade classes.</h2>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="use-the-nyc-flights-data-to-construct-a-graph-that-compares-carriers-in-terms-of-the-proportion-of-2013-flights-that-arrived-on-time-when-traveling-from-nyc-to-atl.-your-graph-should-include-a-title-and-easy-to-read-labels-including-the-names-of-airlines-rather-than-airline-codes." class="section level2">
 <h2>5. Use the NYC flights data to construct a graph that compares carriers in terms of the proportion of 2013 flights that arrived on time when traveling from NYC to ATL. Your graph should include a title and easy-to-read labels, including the names of airlines rather than airline codes.</h2>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnlmbGlnaHRzJHByb3BcblxuYGBgIn0= -->
+<pre class="r"><code>nyflights$prop
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDBcbiJ9 -->
+<pre><code>[1] 0</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTHluc2V5IEtlYXRvciBBc3NpZ25tZW50ICMxMCIKZGF0ZTogIkFwcmlsIDIxIDIwMjAiCmF1dGhvcjogIkx5bnNleSBLZWF0b3IiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCiMjIDEuIFdyaXRlIGEgc2NyaXB0IHRvIGltcG9ydCBhbmQgdGlkeSB0aGUgSm9obnNvbiBFbGVtZW50YXJ5IFByb2plY3QgRGF0YS4KCiMjIDIuIFdyaXRlIGEgc2NyaXB0IHRvIHByb3ZpZGUgc3VtbWFyeSBzdGF0aXN0aWNzIGZvciB0aGUgbnVtYmVyIG9mIHRhcmRpZXMgYW5kIGFic2VuY2VzIGZvciBlYWNoIHJvb20uCiMjIDMuIFdyaXRlIGEgc2NyaXB0IHRvIHNob3cgdGhlIGZyZXF1ZW5jeSBvZiBtaXNzaW5nIGRhdGEgcG9pbnRzIGZvciBlYWNoIHF1YXJ0ZXIgYnkgcm9vbS4KIyMgNC4gQ29uc3RydWN0IGEgZ3JhcGggdGhhdCBpbGx1c3RyYXRlcyB0aGUgbWVkaWFuIHJhdGluZyB0cmVuZHMgYWNyb3NzIHRoZSBmb3VyIHF1YXJ0ZXJzIGZvciB0aGUgZmlmdGgtZ3JhZGUgY2xhc3Nlcy4KIyMgNS4gVXNlIHRoZSBOWUMgZmxpZ2h0cyBkYXRhIHRvIGNvbnN0cnVjdCBhIGdyYXBoIHRoYXQgY29tcGFyZXMgY2FycmllcnMgaW4gdGVybXMgb2YgdGhlIHByb3BvcnRpb24gb2YgMjAxMyBmbGlnaHRzIHRoYXQgYXJyaXZlZCBvbiB0aW1lIHdoZW4gdHJhdmVsaW5nIGZyb20gTllDIHRvIEFUTC4gWW91ciBncmFwaCBzaG91bGQgaW5jbHVkZSBhIHRpdGxlIGFuZCBlYXN5LXRvLXJlYWQgbGFiZWxzLCBpbmNsdWRpbmcgdGhlIG5hbWVzIG9mIGFpcmxpbmVzIHJhdGhlciB0aGFuIGFpcmxpbmUgY29kZXMu</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTHluc2V5IEtlYXRvciBBc3NpZ25tZW50ICMxMCIKZGF0ZTogIkFwcmlsIDIxIDIwMjAiCmF1dGhvcjogIkx5bnNleSBLZWF0b3IiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCiMjIDEuIFdyaXRlIGEgc2NyaXB0IHRvIGltcG9ydCBhbmQgdGlkeSB0aGUgSm9obnNvbiBFbGVtZW50YXJ5IFByb2plY3QgRGF0YS4KCmBgYHtyfQoKIyBMb2FkIHBhY2thZ2VzCmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGhlcmUpCgojIFJlYWQgaW4gZGF0YQpkYXRhIDwtcmVhZF9jc3YoaGVyZSgiRGF0YSIsICJKb2huc29uIEVsZW1lbnRhcnkgRUxBIFByb2plY3QuY3N2IiksCiAgICAgICAgICAgICAgICBza2lwID0gNCwKICAgICAgICAgICAgICAgIGNvbF9uYW1lcyA9IGMoIlJvb20iLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIklEIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJUYXJkaWVzL0Fic2VuY2VzIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJRMSIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiUTIiLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIlEzIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJRNCIpLAogICAgICAgICAgICAgICAgY29sX3R5cGVzID0gY29scyhSb29tID0gY29sX2ZhY3RvcigpKSkKCiMgRmlsbCBtaXNzaW5nIHJvb20gbGFiZWxzIGFuZCBzZXBhcmF0ZSBUYXJkaWVzLEFic2VuY2VzIGludG8gMiBjb2x1bW5zIHVzaW5nIHBpcGUKCmRhdGEgPC0gZGF0YSAlPiUKICBmaWxsKFJvb20pICU+JQogIHNlcGFyYXRlKCdUYXJkaWVzL0Fic2VuY2VzJywgaW50byA9IGMoIlRhcmRpZXMiLCAiQWJzZW5jZXMiKSwgc2VwID0iOyIpCgpkYXRhJFRhcmRpZXMgPC0gcGFyc2VfZG91YmxlKGRhdGEkVGFyZGllcykKCmRhdGEkQWJzZW5jZXMgPC0gcGFyc2VfZG91YmxlKGRhdGEkQWJzZW5jZXMpCnR5cGVvZihkYXRhJFRhcmRpZXMpCnR5cGVvZihkYXRhJEFic2VuY2VzKQoKYGBgCgoKIyMgMi4gV3JpdGUgYSBzY3JpcHQgdG8gcHJvdmlkZSBzdW1tYXJ5IHN0YXRpc3RpY3MgZm9yIHRoZSBudW1iZXIgb2YgdGFyZGllcyBhbmQgYWJzZW5jZXMgZm9yIGVhY2ggcm9vbS4KCgpgYGB7cn0KCnN1bW1hcnlzdGF0aXN0aWNzIDwtIGRhdGEgJT4lCiAgZ3JvdXBfYnkoUm9vbSkgJT4lCiAgc3VtbWFyaXplKFRhcmRpZXNfbWVhbiA9IG1lYW4oVGFyZGllcyksCiAgICAgICAgICAgIFRhcmRpZXNfU0QgPSBzZChUYXJkaWVzKSwKICAgICAgICAgICAgQWJzZW5jZXNfbWVhbiA9IG1lYW4oQWJzZW5jZXMpLAogICAgICAgICAgICBBYnNlbmNlc19zZCA9IHNkKEFic2VuY2VzKSkKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCnN1bW1hcnlzdGF0aXN0aWNzCgpgYGAKCiMjIDMuIFdyaXRlIGEgc2NyaXB0IHRvIHNob3cgdGhlIGZyZXF1ZW5jeSBvZiBtaXNzaW5nIGRhdGEgcG9pbnRzIGZvciBlYWNoIHF1YXJ0ZXIgYnkgcm9vbS4KCmBgYHtyfQoKbWlzc2luZ2RhdGEgPC0gZGF0YSU+JQogIGdyb3VwX2J5KFJvb20pICU+JQogIGNvdW50KHN1bShpcy5uYShRMTpRNCkpKQoKYGBgCgoKIyMgNC4gQ29uc3RydWN0IGEgZ3JhcGggdGhhdCBpbGx1c3RyYXRlcyB0aGUgbWVkaWFuIHJhdGluZyB0cmVuZHMgYWNyb3NzIHRoZSBmb3VyIHF1YXJ0ZXJzIGZvciB0aGUgZmlmdGgtZ3JhZGUgY2xhc3Nlcy4KCmBgYHtyfQoKYGBgCgojIyA1LiBVc2UgdGhlIE5ZQyBmbGlnaHRzIGRhdGEgdG8gY29uc3RydWN0IGEgZ3JhcGggdGhhdCBjb21wYXJlcyBjYXJyaWVycyBpbiB0ZXJtcyBvZiB0aGUgcHJvcG9ydGlvbiBvZiAyMDEzIGZsaWdodHMgdGhhdCBhcnJpdmVkIG9uIHRpbWUgd2hlbiB0cmF2ZWxpbmcgZnJvbSBOWUMgdG8gQVRMLiBZb3VyIGdyYXBoIHNob3VsZCBpbmNsdWRlIGEgdGl0bGUgYW5kIGVhc3ktdG8tcmVhZCBsYWJlbHMsIGluY2x1ZGluZyB0aGUgbmFtZXMgb2YgYWlybGluZXMgcmF0aGVyIHRoYW4gYWlybGluZSBjb2Rlcy4KCmBgYHtyfQojIExvYWQgdGhlIGRhdGEKZmxpZ2h0cyA8LXJlYWRfY3N2KGhlcmUoIkRhdGEiLCAiTllDIEZsaWdodHMgMjAxMy5jc3YiKSkKCiMgR3JhcGggY2FycmllcnMgaW4gdGVybXMgb2YgcHJvcG9ydGlvbiBvZiAyMDEzIGZsaWdodHMgb24gdGltZSBmcm9tIE5ZQyB0byBBVEwKCm55ZmxpZ2h0cyA8LSBmbGlnaHRzICU+JQogIGZpbHRlcihvcmlnaW4gJWluJSBjKCJKRksiLCAiTEdBIiksIGRlc3QgPT0gIkFUTCIpIAoKIyBzdW0gPSAyNTYKCm90ZmxpZ2h0cyA8LSBmbGlnaHRzICU+JQogIGZpbHRlcihhcnJfZGVsYXkgPT0gMCwgb3JpZ2luICVpbiUgYygiSkZLIiwgIkxHQSIpLCBkZXN0ID09ICJBVEwiKSAKCiMgYXJyX2RlbGF5ID09IDAgc3VtID0gMjU2CgpueWZsaWdodHMkcHJvcCA8LSBzdW0obnlmbGlnaHRzJGFycl9kZWxheSkKbnlmbGlnaHRzJHByb3AKCiAgZ2dwbG90KGFlcyhueWZsaWdodHMsIHggPSBjYXJyaWVyLCB5ID0gYXJyX2RlbGF5KSkgKwogIGdlb21fcG9pbnQoKSArCiAgbGFicyh0aXRsZSA9ICJPbiBUaW1lIEFycml2YWxzIGZyb20gTllDIHRvIEFUTCIsCiAgICAgICB4ID0gIkNhcnJpZXIiLAogICAgICAgeSA9ICJQcm9wb3J0aW9uIG9mIDIwMTMgT24gVGltZSBBcnJpdmFscyIpCgpgYGAKCg==</div>
 
 
 
