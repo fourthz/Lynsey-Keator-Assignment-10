@@ -29,16 +29,13 @@ data <-read_csv(here("Data", "Johnson Elementary ELA Project.csv"),
 
 data <- data %>%
   fill(Room) %>%
+  filter(!is.na(ID)) %>%
   separate('Tardies/Absences', into = c("Tardies", "Absences"), sep =";")
 
+# Read tardy and absense columns as doubles, not characters
 data$Tardies <- parse_double(data$Tardies)
-
 data$Absences <- parse_double(data$Absences)
-typeof(data$Tardies)
-typeof(data$Absences)
-
 ```
-
 
 ## 2. Write a script to provide summary statistics for the number of tardies and absences for each room.
 
@@ -47,10 +44,10 @@ typeof(data$Absences)
 
 summarystatistics <- data %>%
   group_by(Room) %>%
-  summarize(Tardies_mean = mean(Tardies),
-            Tardies_SD = sd(Tardies),
-            Absences_mean = mean(Absences),
-            Absences_sd = sd(Absences))
+  summarize(Tardies_mean = mean(Tardies, na.rm = TRUE),
+            Tardies_SD = sd(Tardies, na.rm = TRUE),
+            Absences_mean = mean(Absences, na.rm = TRUE),
+            Absences_sd = sd(Absences, na.rm = TRUE))
                               
 summarystatistics
 
@@ -60,16 +57,35 @@ summarystatistics
 
 ```{r}
 
-missingdata <- data%>%
-  group_by(Room) %>%
-  count(sum(is.na(Q1:Q4)))
+data.long <- data %>%
+  gather(Q1:Q4, key = "Quarter", value = "Rating")
+
+data.long
+
+missing.data <- data.long %>%
+  group_by(Room, Quarter) %>%
+  summarize(sum(is.na(Rating)))
+
+missing.data
 
 ```
-
 
 ## 4. Construct a graph that illustrates the median rating trends across the four quarters for the fifth-grade classes.
 
 ```{r}
+
+plot <- data.long %>%
+  group_by(Room, Quarter) %>%
+  summarize(median_qscores = median(Rating, na.rm = TRUE)) %>%
+  ggplot(aes(x = Quarter, y = median_qscores, group = Room)) +
+  geom_line(aes(color = Room)) +
+  facet_wrap(vars(Room)) +
+  guides(color = "none") +
+  labs(x = "Quarter", 
+       y = "Median ELA Ratings",
+       title = "Fifth Grade ELA Ratings across Four Quarters for each Room")
+
+plot
 
 ```
 
@@ -77,28 +93,26 @@ missingdata <- data%>%
 
 ```{r}
 # Load the data
+
 flights <-read_csv(here("Data", "NYC Flights 2013.csv"))
 
 # Graph carriers in terms of proportion of 2013 flights on time from NYC to ATL
 
-nyflights <- flights %>%
-  filter(origin %in% c("JFK", "LGA"), dest == "ATL") 
-
-# sum = 256
-
-otflights <- flights %>%
-  filter(arr_delay == 0, origin %in% c("JFK", "LGA"), dest == "ATL") 
-
-# arr_delay == 0 sum = 256
-
-nyflights$prop <- sum(nyflights$arr_delay)
-nyflights$prop
-
-  ggplot(aes(nyflights, x = carrier, y = arr_delay)) +
-  geom_point() +
-  labs(title = "On Time Arrivals from NYC to ATL",
-       x = "Carrier",
-       y = "Proportion of 2013 On Time Arrivals")
-
+flights %>%
+  mutate(on_time = (arr_delay <= 0)) %>%
+  filter(dest == "ATL", !is.na(on_time)) %>%
+  ggplot(aes(x = carrier)) + 
+  geom_bar(aes(fill = on_time), position = "fill") +
+  labs(title = "2013 On-Arrivals Flights: NYC --> ATL",
+       x = "Airline Carrier",
+       y = "Proportion of On Time to Delayed Flights") +
+  scale_fill_discrete(name = "Arrival Status",
+                      labels = c("Not on Time", "On Time")) +
+  scale_x_discrete(labels = c("Endeavor Air",
+                              "Delta",
+                              "ExpressJet",
+                              "AirTran",
+                              "Envoy",
+                              "United",
+                              "Southwest"))
 ```
-
