@@ -1,0 +1,13 @@
+---
+title: "Lynsey Keator Assignment #10"
+date: "April 21 2020"
+author: "Lynsey Keator"
+output: html_notebook
+---
+
+## 1. Write a script to import and tidy the Johnson Elementary Project Data.
+
+## 2. Write a script to provide summary statistics for the number of tardies and absences for each room.
+## 3. Write a script to show the frequency of missing data points for each quarter by room.
+## 4. Construct a graph that illustrates the median rating trends across the four quarters for the fifth-grade classes.
+## 5. Use the NYC flights data to construct a graph that compares carriers in terms of the proportion of 2013 flights that arrived on time when traveling from NYC to ATL. Your graph should include a title and easy-to-read labels, including the names of airlines rather than airline codes.
