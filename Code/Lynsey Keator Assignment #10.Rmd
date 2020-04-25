@@ -7,7 +7,7 @@ output: html_notebook
 
 ## 1. Write a script to import and tidy the Johnson Elementary Project Data.
 
-```{r}
+```{r echo=TRUE}
 
 # Load packages
 library(tidyverse)
@@ -40,7 +40,7 @@ data$Absences <- parse_double(data$Absences)
 ## 2. Write a script to provide summary statistics for the number of tardies and absences for each room.
 
 
-```{r}
+```{r echo=TRUE}
 
 summarystatistics <- data %>%
   group_by(Room) %>%
@@ -54,27 +54,27 @@ summarystatistics
 ```
 
 ## 3. Write a script to show the frequency of missing data points for each quarter by room.
-
-```{r}
-
+```{r include=FALSE}
 data.long <- data %>%
   gather(Q1:Q4, key = "Quarter", value = "Rating")
 
 data.long
+```
+
+```{r echo=FALSE}
 
 missing.data <- data.long %>%
   group_by(Room, Quarter) %>%
   summarize(sum(is.na(Rating)))
 
 missing.data
-
 ```
 
 ## 4. Construct a graph that illustrates the median rating trends across the four quarters for the fifth-grade classes.
 
-```{r}
+```{r echo=FALSE}
 
-plot <- data.long %>%
+data.long %>%
   group_by(Room, Quarter) %>%
   summarize(median_qscores = median(Rating, na.rm = TRUE)) %>%
   ggplot(aes(x = Quarter, y = median_qscores, group = Room)) +
@@ -83,30 +83,27 @@ plot <- data.long %>%
   guides(color = "none") +
   labs(x = "Quarter", 
        y = "Median ELA Ratings",
-       title = "Fifth Grade ELA Ratings across Four Quarters for each Room")
-
-plot
+       title = "Fifth Grade ELA Ratings")
 
 ```
 
 ## 5. Use the NYC flights data to construct a graph that compares carriers in terms of the proportion of 2013 flights that arrived on time when traveling from NYC to ATL. Your graph should include a title and easy-to-read labels, including the names of airlines rather than airline codes.
-
-```{r}
+```{r include=FALSE}
 # Load the data
 
 flights <-read_csv(here("Data", "NYC Flights 2013.csv"))
+```
 
-# Graph carriers in terms of proportion of 2013 flights on time from NYC to ATL
-
+```{r echo=FALSE}
 flights %>%
   mutate(on_time = (arr_delay <= 0)) %>%
   filter(dest == "ATL", !is.na(on_time)) %>%
   ggplot(aes(x = carrier)) + 
   geom_bar(aes(fill = on_time), position = "fill") +
-  labs(title = "2013 On-Arrivals Flights: NYC --> ATL",
-       x = "Airline Carrier",
-       y = "Proportion of On Time to Delayed Flights") +
-  scale_fill_discrete(name = "Arrival Status",
+  labs(title = "2013 On-Time Arrivals: NYC -> ATL",
+       x = "Carrier",
+       y = "Proportion Flights (On-Time : Delayed)") +
+  scale_fill_discrete(name = "Status",
                       labels = c("Not on Time", "On Time")) +
   scale_x_discrete(labels = c("Endeavor Air",
                               "Delta",
